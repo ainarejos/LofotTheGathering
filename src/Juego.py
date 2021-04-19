@@ -11,7 +11,6 @@ class Juego:
         p1 = Personaje("Moradin", 80, 30, 10, 100)
         p1.setTecinas(t1, t2)
         p1.getTecnica()
-        print("asdasdasd")
 
 j1 = Juego("LofotTheGathering")
 j1.carga()
