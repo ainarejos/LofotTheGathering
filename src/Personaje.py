@@ -7,15 +7,19 @@ class Personaje:
         self.Armadura=armadura
         self.Resist_Magica=resist_Magica
         self.Energia=energia;
-        self.Tecnicas = []
+        self.Tecnicas=[]
 
     def getNombre(self):
         return self.Nombre
     def getVida(self):
-        return self.Vida
+        return self.vida
     def getTecnica(self):
+        cont=0
         for x in self.Tecnicas:
-            print(str(x.getNombre()))
+            cont=cont+1
+            print(str(cont) + " - " + str(x.getNombre()))
+    def getTecnica1(self, int):
+        return self.Tecnicas[int]
     def getArmadura(self):
         return self.Armadura
     def getResist_Magica(self):
@@ -26,3 +30,6 @@ class Personaje:
     def setTecinas(self, Tecnica1, Tecnica2):
         self.Tecnicas.append(Tecnica1)
         self.Tecnicas.append(Tecnica2)
+
+    def recibirDanyo(self, int):
+        self.vida=self.vida-int
