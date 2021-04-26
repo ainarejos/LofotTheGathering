@@ -52,8 +52,16 @@ class Juego:
         print(jugador.getTecnica())
         tec=input("Seleccione una tecnica: ")
         if tec=="1":
-            enemigo.recibirDanyo(int(jugador.getTecnica1(0).getDanyoFisico()))
-            print(enemigo.getVida())
+            if (jugador.getTecnica1(0).getDanyoFisico) > 0:
+                enemigo.recibirDanyoFisico(int(jugador.getTecnica1(0).getDanyoFisico()))
+            elif (jugador.getTecnica1(0).getDanyoMagico) > 0:
+                enemigo.recibirDanyoMagico(int(jugador.getTecnica1(0).getDanyoMagico()))
+            print("Tecnica realizada correctamente, la vida de " + enemigo.getNombre() +  " es: " + str(enemigo.getVida()))
+
+        elif tec=="2":
+            enemigo.recibirDanyoFisico(int(jugador.getTecnica1(1).getDanyoFisico()))
+            enemigo.recibirDanyoMagico(int(jugador.getTecnica1(1).getDanyoMagico()))
+            print("Tecnica realizada correctamente, la vida de " + enemigo.getNombre() +  " es: " + str(enemigo.getVida()))
 
 
 
@@ -65,9 +73,9 @@ class Juego:
             rondas=rondas+1;
             print("Ronda: " + str(rondas))
             self.usarTecnica(self.jugador1, self.jugador2)
-            print("patata")
-            break
+            print("")
 
+            self.usarTecnica(self.jugador2, self.jugador1)
 
 
 j1 = Juego("LofotTheGathering")

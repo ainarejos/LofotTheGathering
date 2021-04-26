@@ -31,5 +31,13 @@ class Personaje:
         self.Tecnicas.append(Tecnica1)
         self.Tecnicas.append(Tecnica2)
 
-    def recibirDanyo(self, int):
-        self.vida=self.vida-int
+    def recibirDanyoFisico(self, int):
+        if (int>self.Armadura):
+            self.vida=self.vida-int+self.Armadura
+        else:
+            print("La armadura paro el ataque")
+    def recibirDanyoMagico(self, int):
+        if (int > self.Armadura):
+            self.vida = self.vida - int + self.Resist_Magica
+        else:
+            print(str(self.Nombre) + " resistió la tecnica")
