@@ -15,9 +15,9 @@ class Juego:
 
 
     def carga(self):
-        self.t1 = Tecnica("Gancho", 50, 0, 60, 85, 20)
+        self.t1 = Tecnica("Gancho", 50, 0, 60, 85, 15)
         self.t2 = Tecnica("Rayo Solar", 0, 50, 20, 70, 35)
-        self.p1 = Personaje("Moradin", 200, 30, 10, 100)
+        self.p1 = Personaje("Moradin", 200, 30, 10, 20)
         self.p2= Personaje("Gandalf", 200, 30, 10, 100)
         self.p3 = Personaje("Tofol", 100000, 100000, 1000000, 1000000000)
 
@@ -107,18 +107,30 @@ class Juego:
 
         tec=input("Seleccione una tecnica: ")
         if tec=="1":
-            if (jugador.getTecnica1(0).getDanyoFisico()) > 0:
-                enemigo.recibirDanyoFisico(int(jugador.getTecnica1(0).getDanyoFisico()))
-            elif (jugador.getTecnica1(0).getDanyoMagico()) > 0:
-                enemigo.recibirDanyoMagico(int(jugador.getTecnica1(0).getDanyoMagico()))
-            print("Tecnica realizada correctamente, la vida de " + enemigo.getNombre() +  " es: " + str(enemigo.getVida()))
-
+            if jugador.getTecnica1(0).getCosteEnergia()<=jugador.getEnergia():
+                if (jugador.getTecnica1(0).getDanyoFisico()) > 0:
+                    enemigo.recibirDanyoFisico(jugador.getTecnica1(0).getDanyoFisico())
+                    jugador.restarEnergia(int(jugador.getTecnica1(0).getCosteEnergia()))
+                elif (jugador.getTecnica1(0).getDanyoMagico()) > 0:
+                    enemigo.recibirDanyoMagico(int(jugador.getTecnica1(0).getDanyoMagico()))
+                    jugador.restarEnergia(jugador.getTecnica1(0).getCosteEnergia())
+                print("Tecnica realizada correctamente, la vida de " + enemigo.getNombre() +  " es: " + str(enemigo.getVida()))
+            else:
+                print("EL jugador no tiene suficiente energia para realizar esta tecnica, seleccione otra")
+                self.usarTecnica(jugador, enemigo)
         elif tec=="2":
-            if (jugador.getTecnica1(1).getDanyoFisico()) > 0:
-                enemigo.recibirDanyoFisico(int(jugador.getTecnica1(1).getDanyoFisico()))
-            elif (jugador.getTecnica1(1).getDanyoMagico()) > 0:
-                enemigo.recibirDanyoMagico(int(jugador.getTecnica1(1).getDanyoMagico()))
-            print("Tecnica realizada correctamente, la vida de " + enemigo.getNombre() +  " es: " + str(enemigo.getVida()))
+            if jugador.getTecnica1(1).getCosteEnergia() <= jugador.getEnergia():
+                if (jugador.getTecnica1(1).getDanyoFisico()) > 0:
+                    enemigo.recibirDanyoFisico(jugador.getTecnica1(1).getDanyoFisico())
+                    jugador.restarEnergia(int(jugador.getTecnica1(1).getCosteEnergia()))
+                elif (jugador.getTecnica1(1).getDanyoMagico()) > 0:
+                    enemigo.recibirDanyoMagico(int(jugador.getTecnica1(1).getDanyoMagico()))
+                    jugador.restarEnergia(jugador.getTecnica1(1).getCosteEnergia())
+                print("Tecnica realizada correctamente, la vida de " + enemigo.getNombre() + " es: " + str(
+                    enemigo.getVida()))
+            else:
+                print("EL jugador no tiene suficiente energia para realizar esta tecnica, seleccione otra")
+                self.usarTecnica(jugador, enemigo)
         else:
             print("Opcion incorrecta, elija una tecnica valida")
             self.usarTecnica(jugador, enemigo)
@@ -163,10 +175,13 @@ class Juego:
         while self.jugador1.getVida()>0 and self.jugador2.getVida()>0:
             rondas=rondas+1;
             print("-------------------------------------------------\nRonda: "+ str(rondas))
+            print("Energia de " + str(self.jugador1.getNombre()) + ": " + str(self.jugador1.getEnergia()))
             self.usarTecnica(self.jugador1, self.jugador2)
+            self.jugador1.sumarEnergia()
 
             if (self.jugador2.getVida()>0):
                 self.bossAttacks()
+                self.jugador2.sumarEnergia()
         if (self.jugador1.getVida()<=0):
             print("\n-------------------------")
             print("Ha ganado:" + str(self.jugador2.getNombre()))
