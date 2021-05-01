@@ -19,7 +19,7 @@ class Personaje:
         cont = 0
         for x in self.Tecnicas:
             cont = cont + 1
-            print(str(cont) + " - " + str(x.getNombre()))
+            print(str(cont) + " - " + str(x.getNombre()) + " - Coste de energia: " + str(x.getCosteEnergia()))
 
     def getTecnica1(self, int):
         return self.Tecnicas[int]
@@ -46,7 +46,7 @@ class Personaje:
         print("El ataque gasto: " + str(energia) + ", la energia atual es de:" + str(self.getEnergia()))
 
     def sumarEnergia(self):
-        self.Energia=self.Energia+10
+        self.Energia=self.Energia+5
 
     def recibirDanyoFisico(self, int):
         if (int > self.Armadura):

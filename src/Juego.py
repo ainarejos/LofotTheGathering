@@ -12,13 +12,13 @@ class Juego:
         self.personajes=[]
         self.jugador1=Personaje;
         self.jugador2=Personaje;
-
+        self.hola=0;
 
     def carga(self):
         self.t1 = Tecnica("Gancho", 50, 0, 60, 85, 15)
         self.t2 = Tecnica("Rayo Solar", 0, 50, 20, 70, 35)
         self.p1 = Personaje("Moradin", 200, 30, 10, 20)
-        self.p2= Personaje("Gandalf", 200, 30, 10, 100)
+        self.p2= Personaje("Gandalf", 200, 30, 10, 20)
         self.p3 = Personaje("Tofol", 100000, 100000, 1000000, 1000000000)
 
         self.personajes.append(self.p1)
@@ -60,6 +60,7 @@ class Juego:
 
         j=input("-------------------------------------------------\n"+ "Adalid, por favor, seleccione un personaje: ")
         if j=="1":
+            #Convertir a metodo.
             self.p1.descPersonaje()
             eleccion=input("Estas seguro que deseas utilizar este campeon?\n1-- Si\n2-- No\nRespuesta: ")
             if eleccion=="1":
@@ -104,9 +105,11 @@ class Juego:
         print("-------------------------------------------------")
         print("Tecnicas de: " + jugador.getNombre())
         jugador.getTecnica()
+        print("3 - Pasar turno ")
 
         tec=input("Seleccione una tecnica: ")
         if tec=="1":
+            #converit a metodo.
             if jugador.getTecnica1(0).getCosteEnergia()<=jugador.getEnergia():
                 if (jugador.getTecnica1(0).getDanyoFisico()) > 0:
                     enemigo.recibirDanyoFisico(jugador.getTecnica1(0).getDanyoFisico())
@@ -131,6 +134,8 @@ class Juego:
             else:
                 print("EL jugador no tiene suficiente energia para realizar esta tecnica, seleccione otra")
                 self.usarTecnica(jugador, enemigo)
+        elif tec=="3":
+            print("Has pasado de turno")
         else:
             print("Opcion incorrecta, elija una tecnica valida")
             self.usarTecnica(jugador, enemigo)
@@ -146,27 +151,41 @@ class Juego:
 
 
     def bossAttacks(self):
-        r=randint(1,2)
-        print("-------------------------------------------------\nTurno de: "+self.jugador2.getNombre()+ " enemigo\n-------------------------------------------------")
+        r = randint(1, 3)
+        if self.hola==0:
+            print("-------------------------------------------------\nTurno de: "+self.jugador2.getNombre()+ " enemigo, su energia es de: " + str(self.jugador2.getEnergia()) +  "\n-------------------------------------------------")
+
         if r==1:
-            if (self.jugador2.getTecnica1(0).getDanyoFisico()) > 0:
-                self.jugador1.recibirDanyoFisico(int(self.jugador2.getTecnica1(0).getDanyoFisico()))
-                print(self.jugador2.getNombre() +" va a usar "+ self.jugador2.getTecnica1(0).getNombre() )
-            elif (self.jugador1.getTecnica1(0).getDanyoMagico()) > 0:
-                self.jugador1.recibirDanyoMagico(int(self.jugador2.getTecnica1(0).getDanyoMagico()))
-                print(self.jugador2.getNombre() + " va a usar " + self.jugador2.getTecnica1(0).getNombre())
-
-            print("Tecnica realizada correctamente, la vida de " + self.jugador1.getNombre() +  " es: " + str(self.jugador1.getVida()))
+            if self.jugador2.getTecnica1(0).getCosteEnergia() <= self.jugador2.getEnergia():
+                if (self.jugador2.getTecnica1(0).getDanyoFisico()) > 0:
+                    self.jugador1.recibirDanyoFisico(int(self.jugador2.getTecnica1(0).getDanyoFisico()))
+                    print(self.jugador2.getNombre() +" va a usar "+ self.jugador2.getTecnica1(0).getNombre() )
+                elif (self.jugador1.getTecnica1(0).getDanyoMagico()) > 0:
+                    self.jugador1.recibirDanyoMagico(int(self.jugador2.getTecnica1(0).getDanyoMagico()))
+                    print(self.jugador2.getNombre() + " va a usar " + self.jugador2.getTecnica1(0).getNombre())
+                self.hola=0
+                self.jugador2.restarEnergia(int(self.jugador2.getTecnica1(0).getCosteEnergia()))
+                print("Tecnica realizada correctamente, la vida de " + self.jugador1.getNombre() +  " es: " + str(self.jugador1.getVida()))
+            else:
+                self.hola= self.hola +1
+                self.bossAttacks()
         elif r==2:
-            if (self.jugador2.getTecnica1(1).getDanyoFisico()) > 0:
-                self.jugador1.recibirDanyoFisico(int(self.jugador2.getTecnica1(1).getDanyoFisico()))
-                print(self.jugador2.getNombre() + " va a usar " + self.jugador2.getTecnica1(1).getNombre())
-            elif (self.jugador1.getTecnica1(1).getDanyoMagico()) > 0:
-                self.jugador1.recibirDanyoMagico(int(self.jugador2.getTecnica1(1).getDanyoMagico()))
-                print(self.jugador2.getNombre() + " va a usar " + self.jugador2.getTecnica1(1).getNombre())
-
-            print("Tecnica realizada correctamente, la vida de " + self.jugador1.getNombre() + " es: " + str(self.jugador1.getVida()))
-
+            if self.jugador2.getTecnica1(1).getCosteEnergia() <= self.jugador2.getEnergia():
+                if (self.jugador2.getTecnica1(1).getDanyoFisico()) > 0:
+                    self.jugador1.recibirDanyoFisico(int(self.jugador2.getTecnica1(1).getDanyoFisico()))
+                    print(self.jugador2.getNombre() + " va a usar " + self.jugador2.getTecnica1(1).getNombre())
+                elif (self.jugador1.getTecnica1(1).getDanyoMagico()) > 0:
+                    self.jugador1.recibirDanyoMagico(int(self.jugador2.getTecnica1(1).getDanyoMagico()))
+                    print(self.jugador2.getNombre() + " va a usar " + self.jugador2.getTecnica1(1).getNombre())
+                self.hola = 0
+                self.jugador2.restarEnergia(int(self.jugador2.getTecnica1(1).getCosteEnergia()))
+                print("Tecnica realizada correctamente, la vida de " + self.jugador1.getNombre() + " es: " + str(self.jugador1.getVida()))
+            else:
+                self.hola= self.hola+1
+                self.bossAttacks()
+        elif r==3:
+            self.hola = 0
+            print("El enemigo paso de turno")
     def lucha(self):
         print("Que empiecen la arena")
         self.eleccionBoss()
