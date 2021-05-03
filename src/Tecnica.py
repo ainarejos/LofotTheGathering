@@ -1,10 +1,9 @@
 class Tecnica:
-    def __init__(self, Nombre, danyoF, danyoM, probCrit, probAcierto, costeEnergia):
+    def __init__(self, Nombre, danyoF, danyoM, costeEnergia):
         self.Nombre=Nombre
         self.danyoFisico=danyoF
         self.danyoMagico=danyoM
-        self.probCritico=probCrit
-        self.probAcierto=probAcierto
+
         self.costeEnergia=costeEnergia
 
     def getNombre(self):

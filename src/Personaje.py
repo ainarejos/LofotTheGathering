@@ -43,10 +43,10 @@ class Personaje:
 
     def restarEnergia(self, energia):
         self.Energia=self.Energia-energia
-        print("El ataque gasto: " + str(energia) + ", la energia atual es de:" + str(self.getEnergia()))
+        print("El ataque gasto: " + str(energia) + ", la energia actual es de: " + str(self.getEnergia()))
 
     def sumarEnergia(self):
-        self.Energia=self.Energia+5
+        self.Energia=self.Energia+10
 
     def recibirDanyoFisico(self, int):
         if (int > self.Armadura):
