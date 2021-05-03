@@ -3,6 +3,7 @@ from src.Tecnica import Tecnica
 from random import randint
 class Juego:
 
+    #Constructor.
     def __init__(self, nombre):
         #Atributos.
         self.nombre=nombre

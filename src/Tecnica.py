@@ -6,6 +6,7 @@ class Tecnica:
 
         self.costeEnergia=costeEnergia
 
+    #Getters.
     def getNombre(self):
             return self.Nombre
     def getDanyoFisico(self):
